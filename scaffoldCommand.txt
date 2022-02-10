@@ -1,0 +1,1 @@
+Scaffold-DbContext -Connection Name=peiDB Microsoft.EntityFrameworkCore.SqlServer -OutputDir EF -force

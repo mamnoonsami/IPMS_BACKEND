@@ -31,6 +31,7 @@ namespace PEI_API.Controllers
                                orderby pest.PName
                                select new
                                {
+                                   pId = pest.PId,
                                    pest = pest.PName,
                                    image = pest.PPhotoUrl,
                                    description = pest.PDescription
@@ -84,6 +85,8 @@ namespace PEI_API.Controllers
 
             return Ok(pestD);
         }
+
+
 
         [Route("updatedescription")]
         [HttpPut]

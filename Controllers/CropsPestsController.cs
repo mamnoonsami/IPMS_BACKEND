@@ -43,34 +43,45 @@ namespace PEI_API.Controllers
             }
         }
 
-        [NonAction]
-        public async Task<string> SaveImage(IFormFile imageFile)
+        [Route("DeletePest")]
+        [HttpDelete]
+        public async Task<IActionResult> DeletePest(PeiCropspest cp)
         {
-            string imageName = "";
-            if (imageFile != null)
+            /*var obj = _db.PeiCrops.Find(pestId);
+
+            if(obj is null)
             {
-                imageName = new String(Path.GetFileNameWithoutExtension(imageFile.FileName).Take(10).ToArray()).Replace(' ', '-');
-                imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(imageFile.FileName);
-                var imagePath = Path.Combine(_hostEnvironment.ContentRootPath, "images/cropsPests", imageName);
-                using (var fileStream = new FileStream(imagePath, FileMode.Create))
-                {
-                    await imageFile.CopyToAsync(fileStream);
-                }
+                return BadRequest(new { message = "Nothing found " });
             }
 
-            return imageName;
-        }
-
-
-        [NonAction]
-        public void DeleteImage(string imageName)
-        {
-            var imagePath = Path.Combine(_hostEnvironment.ContentRootPath, "images/cropsPests", imageName);
-            if (System.IO.File.Exists(imagePath))
+            else
             {
-                System.IO.File.Delete(imagePath);
+                return Ok();
+            }*/
+            var obj =  _db.PeiCropspests.Where(c => (c.PId == cp.PId) && (c.CId == cp.CId));
+            bool isEmpty = !obj.Any();
+
+            //_db.PeiCropspests.Remove(cropId, pestId);
+            //await _db.SaveChangesAsync();
+            //return Ok(cp);
+
+            if (obj is null)
+            {
+                return BadRequest("No data found");
+
             }
+
+            else
+            {
+                _db.PeiCropspests.Remove(cp);
+                await _db.SaveChangesAsync();
+                return Ok(cp);
+                
+            }
+
+
         }
+
     }
 
 

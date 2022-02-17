@@ -79,7 +79,8 @@ namespace PEI_API.Controllers
                                    PestDetails = c.PeiCropspests.Select(p => new {
                                        PId = p.PIdNavigation.PId,
                                        PName = p.PIdNavigation.PName,
-                                       PUrl = p.PIdNavigation.PPhotoUrl
+                                       //PUrl = p.PIdNavigation.PPhotoUrl,
+                                      PUrl =  String.Format("{0}://{1}{2}/images/cropsPests/{3}", Request.Scheme, Request.Host, Request.PathBase, p.PIdNavigation.PPhotoUrl),
                                    })
                                }).ToListAsync();
             /*var crops = await _db.ICrops.ToListAsync();*/
